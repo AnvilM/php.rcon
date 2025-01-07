@@ -1,22 +1,16 @@
 {
-    "name": "anvilm/rcon",
+    "name": "anvilm/php.rcon",
     "type": "package",
-    "description": "Minecraft Rcon library for laravel",
+    "description": "PHP RCON Client",
     "keywords": ["RCON", "Minecarft"],
     "license": "MIT",
     "require": {
-        "php": "^8.1"
+        "php": ">=7.1",
+        "anvilm/php.tcp-client": "1.0.4"
     },
     "autoload": {
         "psr-4": {
             "AnvilM\\RCON\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "AnvilM\\RCON\\Providers\\RCONServiceProvider"
-            ]
         }
     }
 }

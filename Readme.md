@@ -1,122 +1,95 @@
-# About
-
-Minecraft RCON lib for Laravel
-
-## Install
+## About
+This package is a client that supports some implementations of the RCON protocol.
+[About RCON](https://developer.valvesoftware.com/wiki/Source_RCON_Protocol)
+## Installation
 
 You can get this package using composer
 
 ```bash
-composer require anvilm/rcon
+composer require anvilm/php.rcon
 ```
-
-## Configuration
-To use RCON on your server, you need to enable it and configure it in your Minecraft server settings.
-
-In the file server.properties
-```properties
-rcon.port=25575
-enable-rcon=true
-rcon.password=123
-```
-
 
 # Getting started
 
+## Basic Usage
 
-## Create connection
-
-To create an RCON connection to a minecraft server, you need to create an object of the RCON class.
-
+### Create a client
 ```php
-use AnvilM\RCON\RCON;
+use AnvilM\RCON\Clients\Minecraft\MinecraftClient;
 
 $Ip = '127.0.0.1'; //Server IP
 $Port = 25575; //RCON port
-$Password = '123'; //RCON password
-$Timeout = 30; //Timeout in ms 
 
-$RCON = new RCON($Ip, $Port, $Password, $Timeout);
+$Client = new MinecraftClient($Ip, $Port);
 ```
 
-## Send commands
+### Authentication
+Before sending commands you need to authenticate:
+```php
+$Password = '123' // RCON Password
 
-To send a command to the server, use this method of the RСON class.
-This method will return the response from the server.
+$Client->authenticate($Password);
+```
+
+### Send commands
+To send a command you need to call the sendCommand method:
+```php
+$Client->sendCommand('time set day');
+```
+
+### Available clients:
+
+- **Minecraft**
+
+## Base RCON Client
+
+If you want to create your own client, you can use RconClient to exchange packets with the server.
+
+### RCON Entity
+RCON Entity is an object that acts as a DTO and contains data for sending a command and a response from the server, since they use the same structure.
 
 ```php
-use AnvilM\RCON\RCON;
+use AnvilM\RCON\Entity\RCON
 
-...
-
-$RCON->sendCommand('time set day');
+$data = new RCON(
+    1, // packet id, the response will have the same id
+    2 // packet type, may vary by implementation
+    'time set day' // command 
+);
 ```
 
-## Server Responses
-
-### All responses
-To get all responses from the server use the following method
-
+### Request method
+Request method sends a command to the server and waits for a response, if $timeout is not specified it will wait 5 seconds, if a response has arrived it will return an RCON object with the response data.
 ```php
-use AnvilM\RCON\RCON;
+use AnvilM\RCON\RCONClient;
+use AnvilM\RCON\Entity\RCON;
 
-...
+$client = new RCONClient('127.0.0.1', 25575);
 
-$Response = $RCON->ResponseService->getAllResponses();
+// Minecraft authorization
+$data = new RCON(1, 3, '123');
+
+// Returns new RCON(1, 2, '')
+$response = $client->request($data);
 ```
 
-### Last response
-To get last response from the server use the following method
+## Connections
+This package uses [php.tcp-client](https://github.com/AnvilM/php.tcp-client) so you can manage connections and sockets.
 
+To get the current connection use this method:
 ```php
-use AnvilM\RCON\RCON;
+use AnvilM\RCON\RCONClient;
 
-...
+$client = new RCONClient('127.0.0.1', 25575);
 
-$Response = $RCON->ResponseService->getLastResponse();
+$connection = $client->getConnection();
 ```
 
-### Response by id
-You can get a specific server response from a list if you have the ID of that response.
-
+For example, you can increase or decrease the size of the read and write buffers as needed, this can be useful if the packet size is too large.
 ```php
-use AnvilM\RCON\RCON;
+// Read buffer
+$connection->getSocket()->readBuffer->setBuffer(4096);
 
-...
-
-$Response = $RCON->ResponseService->getResponse(3);
-```
-
-## Examle
-Here is a real example of using this library
-
-```php
-namespace App\Http\Controllers;
-
-use AnvilM\RCON\RCON;
-
-class RCONController extends Controller
-{
-    public function setDay()
-    {
-        $Ip = '127.0.0.1'; //Server IP
-        $Port = 25575; //RCON port
-        $Password = '123'; //RCON password
-        $Timeout = 30; //Timeout in ms 
-
-        $RCON = new RCON($Ip, $Port, $Password, $Timeout); //Create connection
-
-        $RCON->sendCommand('time set day'); //Send command
-
-        $Response = $RCON->ResponseService->getLastResponse(); //Get last response
-
-        echo $Response;
-    }
-}
-```
-
-As a result of executing this code you should get the following result
-
-```
-    Set the time to 1000
+// Send buffer
+$connection->getSocket()->sendBuffer->setBuffer();
 ```

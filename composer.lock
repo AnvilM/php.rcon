@@ -1,0 +1,61 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "8e4df97f9344ff06361bed7bd2d0f77b",
+    "packages": [
+        {
+            "name": "anvilm/php.tcp-client",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AnvilM/tcp.client.git",
+                "reference": "fb51d08f9655c0934da995a271503557b1a85cfb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AnvilM/tcp.client/zipball/fb51d08f9655c0934da995a271503557b1a85cfb",
+                "reference": "fb51d08f9655c0934da995a271503557b1a85cfb",
+                "shasum": ""
+            },
+            "require": {
+                "ext-sockets": "*",
+                "php": ">= 7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Anvil\\TCPClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "anvilm",
+                    "email": "211anvil112@gmail.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/AnvilM/tcp.client/issues",
+                "source": "https://github.com/AnvilM/tcp.client/tree/v1.0.4"
+            },
+            "time": "2025-01-06T23:48:10+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1"
+    },
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
