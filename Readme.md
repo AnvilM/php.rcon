@@ -9,8 +9,6 @@ You can get this package using composer
 composer require anvilm/php.rcon
 ```
 
-# Getting started
-
 ## Basic Usage
 
 ### Create a client
