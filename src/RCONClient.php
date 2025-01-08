@@ -3,14 +3,14 @@
 namespace AnvilM\RCON;
 
 use Anvil\TCPClient\Client;
-use Anvil\TCPClient\Core\Connection;
-use Anvil\TCPClient\Core\ConnectionException;
-use Anvil\TCPClient\Core\Socket\SocketException;
+use Anvil\TCPClient\Connection\Connection;
+use Anvil\TCPClient\Connection\ConnectionException;
+use Anvil\TCPClient\Connection\TCPConnection;
 use AnvilM\RCON\Entity\RCON;
 
 class RCONClient
 {
-    /** @var Connection $connection */
+    /** @var TCPConnection $connection */
     private $connection;
 
     /**
@@ -19,10 +19,8 @@ class RCONClient
     public function __construct($host, $port)
     {
         try {
-            $this->connection = Client::connect($host, $port);
-
-            $this->connection->getSocket()->readBuffer->setBuffer(16384);
-        } catch (SocketException $e) {
+            $this->connection = Client::tcp($host . ':' . $port);
+        } catch (ConnectionException $e) {
             throw new RCONException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -41,7 +39,7 @@ class RCONClient
             . "\x00\x00";
 
         try {
-            $this->connection->send($packet, $timeout);
+            $this->connection->write($packet, $timeout);
         } catch (ConnectionException $e){
             throw new RCONException($e->getMessage(), $e->getCode(), $e);
         }
@@ -56,11 +54,11 @@ class RCONClient
     private function getResponse(int $timeout = 5): RCON
     {
         try {
-            $responseData = unpack('V1length/V1id/V1type', $this->connection->readBinary(12, $timeout));
+            $responseData = unpack('V1length/V1id/V1type', $this->connection->read(12, $timeout));
             $packets = intdiv($responseData['length'], 2048) + 1;
             $body = '';
             while ($packets !== 0) {
-                $response = $this->connection->readBinary(2048, $timeout);
+                $response = $this->connection->read(2048, $timeout);
                 $body .= $response;
                 $packets--;
             }
@@ -91,7 +89,7 @@ class RCONClient
     {
         try {
             $this->connection->close();
-        } catch (SocketException $e) {
+        } catch (ConnectionException $e) {
             throw new RCONException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -103,7 +101,7 @@ class RCONClient
     {
         try {
             $this->connection->open();
-        } catch (SocketException $e) {
+        } catch (ConnectionException $e) {
             throw new RCONException($e->getMessage(), $e->getCode(), $e);
         }
     }

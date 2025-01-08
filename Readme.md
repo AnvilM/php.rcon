@@ -72,7 +72,7 @@ $response = $client->request($data);
 ```
 
 ## Connections
-This package uses [php.tcp-client](https://github.com/AnvilM/php.tcp-client) so you can manage connections and sockets.
+This package uses [php.transport](https://github.com/AnvilM/php.transport) so you can manage connections and sockets.
 
 To get the current connection use this method:
 ```php
@@ -83,11 +83,17 @@ $client = new RCONClient('127.0.0.1', 25575);
 $connection = $client->getConnection();
 ```
 
-For example, you can increase or decrease the size of the read and write buffers as needed, this can be useful if the packet size is too large.
+For example, you can close and open connections, but in this case you will have to authenticate again.
 ```php
-// Read buffer
-$connection->getSocket()->readBuffer->setBuffer(4096);
+// Close connection and create new socket
+$connection->close();
 
-// Send buffer
-$connection->getSocket()->sendBuffer->setBuffer();
+// Open connection with new socket
+$connection->open()
+
+// Auth with new socket
+$client->request(
+    new RCON(1, 3, '123')
+);
+
 ```
