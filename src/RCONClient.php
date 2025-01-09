@@ -2,10 +2,10 @@
 
 namespace AnvilM\RCON;
 
-use Anvil\TCPClient\Client;
-use Anvil\TCPClient\Connection\Connection;
-use Anvil\TCPClient\Connection\ConnectionException;
-use Anvil\TCPClient\Connection\TCPConnection;
+use AnvilM\Transport\Client;
+use AnvilM\Transport\Connection\Connection;
+use AnvilM\Transport\Connection\ConnectionException;
+use AnvilM\Transport\Connection\TCPConnection;
 use AnvilM\RCON\Entity\RCON;
 
 class RCONClient

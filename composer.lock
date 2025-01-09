@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27b97ae8fbe53c2ca05e3975c9764437",
+    "content-hash": "dd1eeafe14c35465313a99b43d2aee32",
     "packages": [
         {
             "name": "anvilm/php.transport",
-            "version": "v2.0.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/AnvilM/php.transport.git",
-                "reference": "dd283d05b5873c22b1eb5d66093508b7d2475245"
+                "reference": "73f53993327a867bbfaae8c2c775cba0ee62f554"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AnvilM/php.transport/zipball/dd283d05b5873c22b1eb5d66093508b7d2475245",
-                "reference": "dd283d05b5873c22b1eb5d66093508b7d2475245",
+                "url": "https://api.github.com/repos/AnvilM/php.transport/zipball/73f53993327a867bbfaae8c2c775cba0ee62f554",
+                "reference": "73f53993327a867bbfaae8c2c775cba0ee62f554",
                 "shasum": ""
             },
             "require": {
@@ -27,7 +27,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Anvil\\TCPClient\\": "src/"
+                    "AnvilM\\Transport\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -42,9 +42,9 @@
             ],
             "support": {
                 "issues": "https://github.com/AnvilM/php.transport/issues",
-                "source": "https://github.com/AnvilM/php.transport/tree/v2.0.0"
+                "source": "https://github.com/AnvilM/php.transport/tree/v3.0.0"
             },
-            "time": "2025-01-08T05:44:12+00:00"
+            "time": "2025-01-08T23:48:51+00:00"
         }
     ],
     "packages-dev": [],

@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1",
-        "anvilm/php.transport": "2.0.0"
+        "anvilm/php.transport": "3.*"
     },
     "autoload": {
         "psr-4": {
